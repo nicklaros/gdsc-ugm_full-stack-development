@@ -40,7 +40,7 @@ You can also add some styling to it if you want.
 
 ## Creating Component
 
-Our app looks good, and if we look the jsx basically there are 3 section in our app
+Our app looks good, and if we look the jsx basically there are 3 sections in our app
 - header
 - todo list
 - form to add new todo
@@ -55,7 +55,7 @@ function Header(props) {
 }
 ```
 
-Note that it accept props parameter which contains all given attributes when it used by other compoennt. In this case, we expect it to be given `text` attribute.
+Note that it accept props parameter which contains all given attributes when it used by other component. In this case, we expect it to be given `text` attribute.
 
 ```html
 <Header text="Learn full stack development todos:" />
@@ -110,7 +110,7 @@ const todos = {
 <TodoList todos={todos} />
 ```
 
-The third compoonent is form to add new todo.
+The third component is form to add new todo.
 
 ```javascript
 function AddTodoForm(props) {
