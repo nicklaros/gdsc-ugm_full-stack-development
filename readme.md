@@ -37,3 +37,112 @@ Now lets delete all jsx and start writing our todo app.
 ```
 
 You can also add some styling to it if you want.
+
+## Creating Component
+
+Our app looks good, and if we look the jsx basically there are 3 section in our app
+- header
+- todo list
+- form to add new todo
+
+Lets break it down by making each of the sections a component of each own so it becomes more reusable.
+
+For our header, we will make it component so when it get used on other places, the view will be consistent.
+
+```javascript
+function Header(props) {
+  return <h1>{props.text}</h1>
+}
+```
+
+Note that it accept props parameter which contains all given attributes when it used by other compoennt. In this case, we expect it to be given `text` attribute.
+
+```html
+<Header text="Learn full stack development todos:" />
+```
+
+The second component is todo list. We want our app to be able to display dynamic todos so we expose props where other component can provide a list of todos to display.
+
+```javascript
+// props.todos is object which contains list of todos.
+// The key is the name of todo.
+// The value is completion status.
+// eg:
+// {
+//   "Name of todo": false
+// }
+function TodoList(props) {
+  const todoNames = Object.keys(props.todos)
+
+  const items = todoNames.map((name) => {
+    return (
+      <li key={name}>
+        <TodoItem name={name} completed={props.todos[name]} />
+      </li>
+    )
+  })
+
+  return (
+    <ul>{items}</ul>
+  )
+}
+
+
+function TodoItem(props) {
+  return (
+    <div>
+      {props.completed ? <strike>{props.name}</strike> : props.name}
+    </div>
+  )
+}
+
+```
+
+We can then use it like this:
+
+```javascript
+const todos = {
+  "Build frontend": false,
+  "Build backend": false,
+  "Connect frontend to backend": false,
+}
+
+<TodoList todos={todos} />
+```
+
+The third compoonent is form to add new todo.
+
+```javascript
+function AddTodoForm(props) {
+  return (
+    <>
+      <input type="text" name="name" />
+      <button>Add</button>
+    </>
+  )
+}
+```
+
+For now it will not do anything fancy. We'll get back to it later.
+
+Our main React component now will looks like this.
+
+```javascript
+function App() {
+  const todos = {
+    "Build frontend": false,
+    "Build backend": false,
+    "Connect frontend to backend": false,
+  }
+
+  return (
+    <div>
+      <Header text="Learn full stack development todos:" />
+
+      <TodoList todos={todos} />
+
+      <AddTodoForm />
+    </div>
+  );
+}
+```
