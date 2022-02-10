@@ -15,4 +15,4 @@ npm start
 
 After that you can open newly created frontend on http://localhost:3000.
 
-Main React component that used to render the page is `src/App.js`. Open that file and try making changes to jsx.
+Main React component that used to render the page is `src/App.js`. Open that file and try making changes to jsx, once you save the file, the app will reflect the changes almost instantly.
