@@ -29,12 +29,11 @@ function TodoList(props) {
 
 function TodoItem(props) {
   return (
-    <div>
+    <>
       {props.completed ? <strike>{props.name}</strike> : props.name}
-    </div>
+    </>
   )
 }
-
 
 function AddTodoForm(props) {
   return (
