@@ -284,3 +284,108 @@ function App() {
 
 > Note:
 > - `setTodos` function
+
+## It's time to build our backend
+
+We will use nodejs and express framework for our backend.
+
+```bash
+mkdir backend
+
+cd backend
+
+npm init
+
+npm install express
+```
+
+Use ES module by adding `type` with value `module` in package.json.
+
+```json
+{
+  ...
+  "type": "module",
+  ...
+}
+```
+
+Lets create our main file as indicated in package.json, eg: `index.js`.
+
+```javascript
+import express from 'express'
+
+// Instantiate express app.
+const app = express()
+
+// Make our app can parse json in request body.
+app.use(express.json())
+
+// Port for exposing our app.
+const port = 3001
+
+// Listen on exposed port.
+app.listen(port, () => {
+  console.log(`Backend listening on port ${port}`)
+})
+```
+
+Our backend will need to have 3 capabilities:
+- list all todos
+- add new todo
+- toggle todo
+
+We will create each of those capabilities as endpoint exposed via http.
+
+### List all todos
+
+```javascript
+...
+
+// For the sake of simplicity, for now we will use in memory variable to store our todos.
+const todos = {}
+
+// Endpoint for listing todos.
+app.get('/list', (req, res) => {
+  res.json({
+    todos,
+  })
+})
+
+...
+```
+
+### Add new todo
+
+```javascript
+... 
+
+// Endpoint for adding new todo.
+app.post('/add', (req, res) => {
+  todos[req.body.name] = req.body.completed
+
+  res.json({
+    error: null,
+  })
+})
+
+...
+```
+
+### Toggle todo
+
+```javascript
+...
+
+// Endpoint for toggling todo.
+app.post('/toggle', (req, res) => {
+  const completed = todos[req.body.name]
+
+  todos[req.body.name] = !completed
+
+  res.json({
+    error: null,
+  })
+})
+
+...
+```
