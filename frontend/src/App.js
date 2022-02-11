@@ -1,4 +1,4 @@
-import './App.css';
+import { useState } from 'react';
 
 function Header(props) {
   return <h1>{props.text}</h1>
@@ -16,7 +16,7 @@ function TodoList(props) {
 
   const items = todoNames.map((name) => {
     return (
-      <li key={name}>
+      <li key={name} onClick={() => props.onItemClick(name)}>
         <TodoItem name={name} completed={props.todos[name]} />
       </li>
     )
@@ -45,17 +45,24 @@ function AddTodoForm(props) {
 }
 
 function App() {
-  const todos = {
+  const [todos, setTodos] = useState({
     "Build frontend": false,
     "Build backend": false,
     "Connect frontend to backend": false,
+  })
+
+  const handleItemClick = (todo) => {
+    setTodos({
+      ...todos,
+      [todo]: !todos[todo],
+    })
   }
 
   return (
     <div>
       <Header text="Learn full stack development todos:" />
 
-      <TodoList todos={todos} />
+      <TodoList todos={todos} onItemClick={handleItemClick} />
 
       <AddTodoForm />
     </div>

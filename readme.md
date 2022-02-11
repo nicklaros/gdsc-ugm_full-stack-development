@@ -154,3 +154,67 @@ function App() {
   );
 }
 ```
+
+## Marking todo as done
+
+When we done with a todo we want to mark it as completed. In our case we will strikethrough our completed todo to mark it as done.
+
+When user click a todo item, we want to toggle todo completion status, lets change TodoList component by placing `onClick` listener on our todo item, the handler is given via `onItemClick` prop.
+
+```javascript
+function TodoList(props) {
+  const todoNames = Object.keys(props.todos)
+
+  const items = todoNames.map((name) => {
+    return (
+      <li key={name} onClick={() => props.onItemClick(name)}>
+        <TodoItem name={name} completed={props.todos[name]} />
+      </li>
+    )
+  })
+
+  return (
+    <ul>{items}</ul>
+  )
+}
+```
+
+> Note: 
+> - `onClick` attribute
+> - `props.onItemClick` attribute
+
+Then, we need to store our todos in a state so we can add some interactivity by changing the state.
+
+```javascript
+import { useState } from 'react';
+
+function App() {
+  const [todos, setTodos] = useState({
+    "Build frontend": false,
+    "Build backend": false,
+    "Connect frontend to backend": false,
+  })
+
+  const handleItemClick = (todo) => {
+    setTodos({
+      ...todos,
+      [todo]: !todos[todo],
+    })
+  }
+
+  return (
+    <div>
+      <Header text="Learn full stack development todos:" />
+
+      <TodoList todos={todos} onItemClick={handleItemClick} />
+
+      <AddTodoForm />
+    </div>
+  );
+}
+```
+
+> Note: 
+> - `handleItemClick` handler function
+> - `useState` react function
+
