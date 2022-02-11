@@ -1,10 +1,14 @@
 import express from 'express'
+import cors from "cors"
 
 // Instantiate express app.
 const app = express()
 
 // Make our app can parse json in request body.
 app.use(express.json())
+
+// Allow cors.
+app.use(cors())
 
 // For the sake of simplicity, for now we will use in memory variable to store our todos.
 const todos = {}

@@ -389,3 +389,109 @@ app.post('/toggle', (req, res) => {
 
 ...
 ```
+
+## Connecting frontend to backend
+
+Because our frontend and backend are running on different port, 
+we need to change our backend so it allows cors.  
+We will use `cors` library.
+
+```bash
+cd backend
+
+npm install cors
+```
+
+Then we use it like this in `index.js`.
+
+```javascript
+import cors from "cors"
+
+...
+
+// Allow cors.
+app.use(cors())
+```
+
+We will use `axios` library for our frontend to call backend, so lets install it.
+
+```bash
+cd frontend
+
+npm install axios
+```
+
+Now we are ready to connect our frontend.
+
+### Listing todo from backend
+
+Open `App.js` and replace the hardcoded todos with values received from backend.
+
+```javascript
+import React, { useState, useEffect } from 'react';
+import axios from "axios";
+
+...
+
+function App() {
+  const [todos, setTodos] = useState({})
+
+  useEffect(() => {
+    axios.get("http://localhost:3001/list").then((res) => {
+      setTodos(res.data.todos)
+    })
+  }, []);
+
+  ...
+}
+```
+
+> Note:
+> - `useEffect`
+
+### Adding todo to backend
+
+```javascript
+function App() {
+  ...
+
+  const handleAdd = (todo) => {
+    const newTodo = {
+      name: todo,
+      completed: false
+    }
+
+    axios.post("http://localhost:3001/add", newTodo).then(() => {
+      setTodos({
+        ...todos,
+        [todo]: false,
+      })
+    })
+  }
+
+  ...
+}
+```
+
+### Toggling todo using backend
+
+```javascript
+function App() {
+  ...
+
+  const handleItemClick = (todo) => {
+    const toggleTodo = {
+      name: todo,
+    }
+
+    axios.post("http://localhost:3001/toggle", toggleTodo).then(() => {
+      setTodos({
+        ...todos,
+        [todo]: !todos[todo],
+      })
+    })
+  }
+
+  ...
+}
+```

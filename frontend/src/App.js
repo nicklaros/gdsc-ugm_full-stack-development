@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from "axios";
 
 function Header(props) {
   return <h1>{props.text}</h1>
@@ -58,23 +59,38 @@ function AddTodoForm(props) {
 }
 
 function App() {
-  const [todos, setTodos] = useState({
-    "Build frontend": false,
-    "Build backend": false,
-    "Connect frontend to backend": false,
-  })
+  const [todos, setTodos] = useState({})
+
+  useEffect(() => {
+    axios.get("http://localhost:3001/list").then((res) => {
+      setTodos(res.data.todos)
+    })
+  }, []);
 
   const handleItemClick = (todo) => {
-    setTodos({
-      ...todos,
-      [todo]: !todos[todo],
+    const toggleTodo = {
+      name: todo,
+    }
+
+    axios.post("http://localhost:3001/toggle", toggleTodo).then(() => {
+      setTodos({
+        ...todos,
+        [todo]: !todos[todo],
+      })
     })
   }
 
   const handleAdd = (todo) => {
-    setTodos({
-      ...todos,
-      [todo]: false,
+    const newTodo = {
+      name: todo,
+      completed: false
+    }
+
+    axios.post("http://localhost:3001/add", newTodo).then(() => {
+      setTodos({
+        ...todos,
+        [todo]: false,
+      })
     })
   }
 
