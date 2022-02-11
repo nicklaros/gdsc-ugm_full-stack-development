@@ -55,6 +55,9 @@ function Header(props) {
 }
 ```
 
+> Note:
+> - Function components
+
 Note that it accept props parameter which contains all given attributes when it used by other component. In this case, we expect it to be given `text` attribute.
 
 ```html
@@ -97,6 +100,11 @@ function TodoItem(props) {
 }
 
 ```
+
+> Note:
+> - Component composition
+> - Conditional rendering
+> - React fragments (`<>...</>` tag)
 
 We can then use it like this:
 
