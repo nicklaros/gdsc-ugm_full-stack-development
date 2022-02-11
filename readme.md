@@ -1,3 +1,7 @@
+# Use Case
+
+Making simple todo app to demonstrates full stack development by building frontend and backend then connecting the two.
+
 # Steps
 
 ## Lets start by building our frontend
@@ -250,18 +254,7 @@ Then we change our main App component.
 
 ```javascript
 function App() {
-  const [todos, setTodos] = useState({
-    "Build frontend": false,
-    "Build backend": false,
-    "Connect frontend to backend": false,
-  })
-
-  const handleItemClick = (todo) => {
-    setTodos({
-      ...todos,
-      [todo]: !todos[todo],
-    })
-  }
+  ...
 
   const handleAdd = (todo) => {
     setTodos({
@@ -272,9 +265,7 @@ function App() {
 
   return (
     <div>
-      <Header text="Learn full stack development todos:" />
-
-      <TodoList todos={todos} onItemClick={handleItemClick} />
+      ...
 
       <AddTodoForm onSubmit={handleAdd} />
     </div>
