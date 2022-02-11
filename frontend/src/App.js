@@ -36,10 +36,23 @@ function TodoItem(props) {
 }
 
 function AddTodoForm(props) {
+  const [value, setValue] = useState("");
+
+  const handleSubmit = () => {
+    props.onSubmit(value)
+
+    setValue("")
+  }
+
   return (
     <>
-      <input type="text" name="name" />
-      <button>Add</button>
+      <input
+        type="text"
+        name="name"
+        value={value}
+        onChange={(event) => setValue(event.target.value)}
+      />
+      <button onClick={handleSubmit}>Add</button>
     </>
   )
 }
@@ -58,13 +71,20 @@ function App() {
     })
   }
 
+  const handleAdd = (todo) => {
+    setTodos({
+      ...todos,
+      [todo]: false,
+    })
+  }
+
   return (
     <div>
       <Header text="Learn full stack development todos:" />
 
       <TodoList todos={todos} onItemClick={handleItemClick} />
 
-      <AddTodoForm />
+      <AddTodoForm onSubmit={handleAdd} />
     </div>
   );
 }

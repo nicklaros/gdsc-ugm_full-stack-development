@@ -218,3 +218,69 @@ function App() {
 > - `handleItemClick` handler function
 > - `useState` react function
 
+## Adding new todo
+
+Add interactivity on add todo form.
+
+```javascript
+function AddTodoForm(props) {
+  const [value, setValue] = useState("");
+
+  const handleSubmit = () => {
+    props.onSubmit(value)
+
+    setValue("")
+  }
+
+  return (
+    <>
+      <input
+        type="text"
+        name="name"
+        value={value}
+        onChange={(event) => setValue(event.target.value)}
+      />
+      <button onClick={handleSubmit}>Add</button>
+    </>
+  )
+}
+```
+
+Then we change our main App component.
+
+```javascript
+function App() {
+  const [todos, setTodos] = useState({
+    "Build frontend": false,
+    "Build backend": false,
+    "Connect frontend to backend": false,
+  })
+
+  const handleItemClick = (todo) => {
+    setTodos({
+      ...todos,
+      [todo]: !todos[todo],
+    })
+  }
+
+  const handleAdd = (todo) => {
+    setTodos({
+      ...todos,
+      [todo]: false,
+    })
+  }
+
+  return (
+    <div>
+      <Header text="Learn full stack development todos:" />
+
+      <TodoList todos={todos} onItemClick={handleItemClick} />
+
+      <AddTodoForm onSubmit={handleAdd} />
+    </div>
+  );
+}
+```
+
+> Note:
+> - `setTodos` function
